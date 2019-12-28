@@ -1,8 +1,14 @@
 const Jimp = require('jimp');
 const { updateImage } = require('./utils');
 
-module.exports.getImagewithLogo = async (imagename, config) => {
 
+/**
+ * This function is to read image and logo and process that
+ * as per configuration and compose the final image with logo
+ * @param {* image to be read } imagename 
+ * @param {* image processing configuration} config 
+ */
+module.exports.getImagewithLogo = async (imagename, config) => {
     const mainImage = await Jimp.read(config.destFolderName + '/' + imagename);
     const logo = await Jimp.read(config.destFolderName + '/' + config.logoName);
 

@@ -1,6 +1,10 @@
 
 const multer = require('multer');
 
+/**
+ * Local storage to store the file 
+ * @param {* folder where incoming file are stored } destFolderName 
+ */
 module.exports.createLocalStorage = (destFolderName) => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {

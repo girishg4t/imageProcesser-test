@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { createLocalStorage } = require('./storage');
-const { getImagewithLogo } = require("./imageProcesser");
+const getImagewithLogo = require("./imageProcesser");
 const config = require('./imageConfig.json');
 const app = express();
 const port = 3000;
