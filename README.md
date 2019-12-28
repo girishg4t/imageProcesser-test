@@ -6,3 +6,9 @@ The endpoint should return a URL to the image which is scaled and has an overlay
 
 ### start the project as
 ``node server.js``
+
+## Input Image :
+![Input Image](./nature.jpeg)
+
+## Output Scaled Image : 
+![Output Image](./imagewithLogoandScaled.jpg)
