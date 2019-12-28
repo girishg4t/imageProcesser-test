@@ -1,23 +1,24 @@
 const express = require('express');
 const path = require('path');
-const { getLocalStorage } = require('./storage');
-const { getImageUrlWithLogo } = require("./imageProcesser");
+const { createLocalStorage } = require('./storage');
+const { getImagewithLogo } = require("./imageProcesser");
 const config = require('./imageConfig.json');
 const app = express();
 const port = 3000;
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/" + config.destFolderName,
+    express.static(path.join(__dirname, config.destFolderName)));
 
-app.post('/imageURL',
-    getLocalStorage(config.folderName).single('image'),
+
+app.post('/getUpdatedImageURL',
+    createLocalStorage(config.destFolderName).single('image'),
     async function (req, res) {
         if (!req.image) {
             res.status(500);
         }
-        const imageWithLogo = await getImageUrlWithLogo(req.file.filename);
-
+        const imageWithLogo = await getImagewithLogo(req.file.filename, config);
         res.json({
-            fileUrl: 'http://localhost:' + port + '/' + imageWithLogo
+            fileUrl: req.protocol + "://" + req.hostname + ':' + port + '/' + imageWithLogo
         });
     });
 

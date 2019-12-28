@@ -1,9 +1,9 @@
 {
-    "folderName": "images",
-    "logoPath": "./images/snowball_logo.png",
-    "ratio": 0.1,
-    "opacity": 1,
-    "resizeHeight": 500,
-    "resizeWidth": 500,
+    "destFolderName": "images",
+    "logoName": "snowball_logo.png",
+    "logoRatio": 0.1,
+    "logoOpacity": 1,
+    "imageResizeHeight": 500,
+    "imageResizeWidth": 500,
     "imageQuality": 100
 }

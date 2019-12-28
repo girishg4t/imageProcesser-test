@@ -1,10 +1,10 @@
 
 const multer = require('multer');
 
-module.exports.getLocalStorage = (folderName) => {
+module.exports.createLocalStorage = (destFolderName) => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, folderName);
+            cb(null, destFolderName);
         },
         filename: (req, file, cb) => {
             var filetype = '';

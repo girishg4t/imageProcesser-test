@@ -1,35 +1,33 @@
 const Jimp = require('jimp');
-const config = require('./imageConfig.json');
+const { updateImage } = require('./utils');
 
-const getDimensions = (H, W, h, w, ratio) => {
-    let hh, ww;
-    if ((H / W) < (h / w)) {    //GREATER HEIGHT
-        hh = ratio * H;
-        ww = hh / h * w;
-    } else {                //GREATER WIDTH
-        ww = ratio * W;
-        hh = ww / w * h;
-    }
-    return [hh, ww];
-}
+module.exports.getImagewithLogo = async (imagename, config) => {
 
-module.exports.getImageUrlWithLogo = async (filename) => {
-    const mainImage = await Jimp.read(config.folderName + '/' + filename);
-    const watermark = await Jimp.read(config.logoPath);
+    const mainImage = await Jimp.read(config.destFolderName + '/' + imagename);
+    const logo = await Jimp.read(config.destFolderName + '/' + config.logoName);
 
-    const [newHeight, newWidth] = getDimensions(mainImage.getHeight(), mainImage.getWidth(),
-        watermark.getHeight(), watermark.getWidth(), config.ratio);
-    watermark.resize(newWidth, newHeight);
+    updateImage(mainImage, {
+        quality: config.imageQuality,
+        resize: {
+            width: config.imageResizeWidth,
+            height: config.imageResizeHeight
+        },
+        opacity: null
+    });
 
-    const positionX = (mainImage.getWidth() - newWidth) / 2;
-    const positionY = (mainImage.getHeight() - newHeight) / 2;
-    watermark.opacity(config.opacity);
-    mainImage.composite(watermark,
-        100,
-        0,
+    updateImage(logo, {
+        quality: null,
+        resize: {
+            width: config.imageResizeWidth * config.logoRatio,
+            height: config.imageResizeHeight * config.logoRatio
+        },
+        opacity: config.logoOpacity
+    });
+
+    mainImage.composite(logo, mainImage.getWidth() - logo.getWidth(), 0,
         Jimp.HORIZONTAL_ALIGN_RIGHT | Jimp.VERTICAL_ALIGN_TOP);
-    mainImage.quality(config.imageQuality).resize(config.resizeWidth,
-        config.resizeHeight).write("./images/withlogo_" + filename);
 
-    return config.folderName + '/withlogo_' + filename
+    const destPath = config.destFolderName + "/withlogo_" + imagename;
+    mainImage.write(destPath);
+    return destPath;
 }
