@@ -10,5 +10,5 @@ The endpoint should return a URL to the image which is scaled and has an overlay
 ## Input Image :
 ![Input Image](./nature.jpeg)
 
-## Output Scaled Image : 
+## Output Scaled Image with logo: 
 ![Output Image](./imagewithLogoandScaled.jpg)
